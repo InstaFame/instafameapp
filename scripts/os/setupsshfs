@@ -1,0 +1,1 @@
+sshfs instafame@34.225.105.43:/home/instafame/instafameapp/ sshfs_dir -o IdentityFile=~/Downloads/InstaFame.pem
