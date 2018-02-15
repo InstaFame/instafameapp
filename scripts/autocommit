@@ -1,5 +1,5 @@
 DATE=`date +%F_%T`
-cd /opt/pivotal/Verisk-Greenplum/
+cd /home/instafame/instafameapp
 git add -A
 git commit -m "Github Auto-commit via Instafame Cron $DATE"
 git push origin master
