@@ -1,1 +1,7 @@
 2018-02-15_20:40:01 Repo is out of sync, updating now
+[master 855560a] Github Auto-commit via Instafame Cron 2018-02-15_20:40:01
+ 3 files changed, 2 insertions(+), 1 deletion(-)
+ delete mode 100755 instafame_variables.sh
+ create mode 100644 scripts/cron/cronlog.out
+ create mode 100755 scripts/os/instafame_variables.sh
+2018-02-15_21:00:01 Repo is out of sync, updating now
