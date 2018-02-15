@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Install Git
+sudo yum install git
+
+# Download Postgres RPM
+sudo rpm -i https://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-6-x86_64/pgdg-ami201503-96-9.6-2.noarch.rpm
+
+# Update Yum
+sudo yum update
+
+# Install Postgres from RPM Repo
+sudo yum install postgresql96-server
+
+

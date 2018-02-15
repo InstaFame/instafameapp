@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+sudo su - postgres -c '/usr/lib64/pgsql96/bin/pg_ctl -D /var/lib/pgsql96/newdata stop'
