@@ -1,4 +1,4 @@
 echo 'Building cron job for auto-commit now'
-(crontab -l 2>/dev/null; echo "*/20 * * * * /bin/bash /home/instafame/instafameapp/scripts/cron/check_git_status.sh >> ./cronlog.out") | crontab -
+(crontab -l 2>/dev/null; echo "*/20 * * * * /bin/bash /home/instafame/instafameapp/scripts/cron/check_git_status.sh >> /home/instafame/instafameapp/scripts/cron/cronlog.out") | crontab -
 
 crontab -l
