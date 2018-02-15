@@ -5,3 +5,7 @@
  create mode 100644 scripts/cron/cronlog.out
  create mode 100755 scripts/os/instafame_variables.sh
 2018-02-15_21:00:01 Repo is out of sync, updating now
+[master 7c21288] Github Auto-commit via Instafame Cron 2018-02-15_21:00:01
+ 2 files changed, 11 insertions(+)
+ create mode 100644 application/api-reddit.py
+2018-02-15_21:20:01 Repo is out of sync, updating now
