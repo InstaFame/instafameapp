@@ -90,6 +90,10 @@ def buildTopPosts(subInput):
             dictPost['url_parent'] = parseUrl(submission.url)
             #print("Domain: ") + str(setDomain(parseUrl(submission.url)))
             dictPost['domain_name'] = setDomain(parseUrl(submission.url))
+            #print("URL: " + str(submission.url))
+            dictPost['created'] = submission.ucreatedrl
+            #print("URL: " + str(submission.url))
+            dictPost['created_utc'] = submission.created_utc
 
         listPost.append(dictPost.copy())
 
