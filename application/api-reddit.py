@@ -55,33 +55,46 @@ def getTopPosts(subInput):
     # Declare the subreddit to be searched
     subreddit = reddit.subreddit(subInput)
 
+    looper = 0
+
+
+
     # Loop through the top 5 hottest current posts
     for submission in subreddit.top('month'):
-        looper = 0
+
         # Check if post has already been made, also make sure you're not looking at a stickied thread
         if submission.id not in posts_replied_to and submission.stickied == False :
+
+            # Creates a dictionary of each individual post
+            dictPost = {}
             print("Title: " + submission.title)
+            dictPost['title'] = submission.title
             print("Link ID: " + str(submission.id))
-            print("Is Reddit Media Domain: " + str(submission.is_reddit_media_domain))
+            dictPost['link_id'] = submission.id
             print("Is Video: " + str(submission.is_video))
-            print("Media: " + str(submission.media))
-            print("Media Embed: " + str(submission.media_embed))
+            dictPost['is_video'] = submission.is_video
             print("Score: " + str(submission.score))
+            dictPost['score'] = submission.score
             print("Shortlink: " + str(submission.shortlink))
+            dictPost['shortlink'] = submission.shortlink
             print("Is Spoiler: " + str(submission.spoiler))
+            dictPost['is_spoiler'] = submission.spoiler
             print("Thumbnail Height: " + str(submission.thumbnail_height))
+            dictPost['thumbnail_height'] = submission.thumbnail_height
             print("Thumbnail Width: " + str(submission.thumbnail_width))
-            print("View Count: " + str(submission.view_count))
+            dictPost['thumbnail_width'] = submission.thumbnail_width
             print("URL: " + str(submission.url))
+            dictPost['url'] = submission.url
             print("URL Parent: " + str(parseUrl(submission.url)))
+            dictPost['url_parent'] = parseUrl(submission.url)
             print("Domain: ") + str(setDomain(parseUrl(submission.url)))
+            dictPost['domain'] = setDomain(parseUrl(submission.url))
             print('############################')
 
-            if looper > 3:
-                break
-            else:
-                looper = looper + 11
+            looper = looper + 1
 
+        print looper
+        print dictPost
 
 init()
 getTopPosts('aww')
