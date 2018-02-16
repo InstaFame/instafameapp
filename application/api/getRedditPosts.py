@@ -2,6 +2,7 @@
 import praw
 import os
 from urlparse import urlparse
+import time
 
 # Setup Authentication Credentials
 def init():
@@ -36,11 +37,11 @@ def parseUrl(submissionLink):
     return domain
 
 def setDomain(domain):
-    if domain == 'i.imgur.com':
+    if 'imgur' in domain:
         domain = 'imgur'
-    elif domain == 'gfycat.com':
+    elif 'gfycat' in domain:
         domain = 'gfycat'
-    elif domain == 'i.redd.it':
+    elif 'reddit' in domain or 'redd.it' in domain:
         domain = 'reddit'
     else:
         domain = 'unparsed'
@@ -91,9 +92,9 @@ def buildTopPosts(subInput):
             #print("Domain: ") + str(setDomain(parseUrl(submission.url)))
             dictPost['domain_name'] = setDomain(parseUrl(submission.url))
             #print("URL: " + str(submission.url))
-            dictPost['created'] = submission.ucreatedrl
-            #print("URL: " + str(submission.url))
-            dictPost['created_utc'] = submission.created_utc
+            dictPost['created_utc'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(submission.created_utc))
+            dictPost['subreddit'] = str(subreddit)
+
 
         listPost.append(dictPost.copy())
 

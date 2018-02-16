@@ -32,7 +32,6 @@ def insertStaging(subreddit):
     # Loop through list for individual dictionaries
     for i in dict_data:
         # Insert each dict as a row
-        print i
         sql = "INSERT INTO stg." + str(subreddit) + " (" + ", ".join(i.keys()) + ") VALUES (" + ", ".join(["%("+k+")s" for k in i]) + ");"
         try:
             execute = cur.execute(sql, i)
