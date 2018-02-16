@@ -49,6 +49,8 @@ def setDomain(domain):
 
 # Function to get the top posts
 def buildTopPosts(subInput):
+    global reddit
+
     # Get list of already posted posts
     posts_replied_to = buildPostsList()
 
@@ -91,11 +93,11 @@ def buildTopPosts(subInput):
 
         listPost.append(dictPost.copy())
 
-    print listPost
+    return listPost
 
-def main():
+def main(subreddit):
     init()
-    buildTopPosts('aww')
+    return buildTopPosts(subreddit)
 
 if __name__ == "__main__":
     main()
