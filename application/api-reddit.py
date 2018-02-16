@@ -37,7 +37,7 @@ def getTopPosts(subInput):
     subreddit = reddit.subreddit(subInput)
 
     # Loop through the top 5 hottest current posts
-    for submission in subreddit.hot(limit=5):
+    for submission in subreddit.top('month'):
 
         # Check if post has already been made, also make sure you're not looking at a stickied thread
         if submission.id not in posts_replied_to and submission.stickied == False :
