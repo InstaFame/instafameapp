@@ -89,7 +89,7 @@ def buildTopPosts(subInput):
             #print("URL Parent: " + str(parseUrl(submission.url)))
             dictPost['url_parent'] = parseUrl(submission.url)
             #print("Domain: ") + str(setDomain(parseUrl(submission.url)))
-            dictPost['domain'] = setDomain(parseUrl(submission.url))
+            dictPost['domain_name'] = setDomain(parseUrl(submission.url))
 
         listPost.append(dictPost.copy())
 
