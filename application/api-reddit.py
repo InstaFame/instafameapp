@@ -41,7 +41,20 @@ def getTopPosts(subInput):
 
         # Check if post has already been made, also make sure you're not looking at a stickied thread
         if submission.id not in posts_replied_to and submission.stickied == False :
-            print(submission.title)
+            print("Title: " + submission.title)
+            print("Link ID: " + submission.id)
+            print("Is Reddit Media Domain: " + str(submission.is_reddit_media_domain))
+            print("Is Video: " + str(submission.is_video))
+            print("Media: " + str(submission.media)
+            print("Media Embed: " + str(submission.media_embed)
+            print("Score: " + str(submission.score)
+            print("Shortlink: " + str(submission.shortlink))
+            print("Is Spoiler: " + str(submission.spoiler)
+            print("Thumbnail Height: " + str(submission.thumbnail_height)
+            print("Thumbnail Width: " + str(submission.thumbnail_width)
+            print("View Count: " + submission.view_count)
+            print('############################')
+
 
 init()
 getTopPosts('aww')
