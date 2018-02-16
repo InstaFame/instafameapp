@@ -48,16 +48,14 @@ def setDomain(domain):
     return domain
 
 # Function to get the top posts
-def getTopPosts(subInput):
+def buildTopPosts(subInput):
     # Get list of already posted posts
     posts_replied_to = buildPostsList()
 
     # Declare the subreddit to be searched
     subreddit = reddit.subreddit(subInput)
 
-    looper = 0
-
-
+    listPost = []
 
     # Loop through the top 5 hottest current posts
     for submission in subreddit.top('month'):
@@ -67,34 +65,37 @@ def getTopPosts(subInput):
 
             # Creates a dictionary of each individual post
             dictPost = {}
-            print("Title: " + submission.title)
+
+            #print("Title: " + submission.title)
             dictPost['title'] = submission.title
-            print("Link ID: " + str(submission.id))
+            #print("Link ID: " + str(submission.id))
             dictPost['link_id'] = submission.id
-            print("Is Video: " + str(submission.is_video))
+            #print("Is Video: " + str(submission.is_video))
             dictPost['is_video'] = submission.is_video
-            print("Score: " + str(submission.score))
+            #print("Score: " + str(submission.score))
             dictPost['score'] = submission.score
-            print("Shortlink: " + str(submission.shortlink))
+            #print("Shortlink: " + str(submission.shortlink))
             dictPost['shortlink'] = submission.shortlink
-            print("Is Spoiler: " + str(submission.spoiler))
+            #print("Is Spoiler: " + str(submission.spoiler))
             dictPost['is_spoiler'] = submission.spoiler
-            print("Thumbnail Height: " + str(submission.thumbnail_height))
+            #print("Thumbnail Height: " + str(submission.thumbnail_height))
             dictPost['thumbnail_height'] = submission.thumbnail_height
-            print("Thumbnail Width: " + str(submission.thumbnail_width))
+            #print("Thumbnail Width: " + str(submission.thumbnail_width))
             dictPost['thumbnail_width'] = submission.thumbnail_width
-            print("URL: " + str(submission.url))
+            #print("URL: " + str(submission.url))
             dictPost['url'] = submission.url
-            print("URL Parent: " + str(parseUrl(submission.url)))
+            #print("URL Parent: " + str(parseUrl(submission.url)))
             dictPost['url_parent'] = parseUrl(submission.url)
-            print("Domain: ") + str(setDomain(parseUrl(submission.url)))
+            #print("Domain: ") + str(setDomain(parseUrl(submission.url)))
             dictPost['domain'] = setDomain(parseUrl(submission.url))
-            print('############################')
 
-            looper = looper + 1
+        listPost.append(dictPost.copy())
 
-        print looper
-        print dictPost
+    print listPost
 
-init()
-getTopPosts('aww')
+def main():
+    init()
+    buildTopPosts('aww')
+
+if __name__ == "__main__":
+    main()
