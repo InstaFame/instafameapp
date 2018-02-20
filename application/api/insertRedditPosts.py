@@ -83,6 +83,8 @@ def insertStaging():
             successful_rows = successful_rows + 1
         except Exception as e:
             insertError = e
+            print insertError
+            commit = conn.commit()
             failed_rows = failed_rows + 1
 
     if failed_rows == 0 and successful_rows != 0:
