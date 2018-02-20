@@ -35,6 +35,8 @@ def parseArguments():
         cfg.user = args.usr
     if args.test:
         cfg.test = args.test
+    if args.sub:
+        cfg.subreddit = args.sub
 
     return cfg
 
@@ -46,7 +48,7 @@ def connectToDB():
 
     return conn
 
-def insertStaging(subreddit):
+def insertStaging():
 
     cfg = parseArguments()
 
@@ -55,6 +57,8 @@ def insertStaging(subreddit):
 
     # Create connection cursor
     cur = conn.cursor()
+
+    subreddit = cfg.subreddit
 
     try:
         cur.execute("SELECT version()")
@@ -81,7 +85,7 @@ def insertStaging(subreddit):
             insertError = e
             failed_rows = failed_rows + 1
 
-    if failed_rows == 0:
+    if failed_rows == 0 and successful_rows != 0:
         subject = "Insert Staging Subreddit: /r/" + str(subreddit) + " - SUCCESS"
         body = "Job inserting staging was successful at " + str(getTime.getTimestamp()) + ".\n\nSuccessfully Inserted Rows: " + str(successful_rows) + "\nFailed Inserted Rows: " + str(failed_rows)
         if cfg.test == True:
@@ -89,11 +93,20 @@ def insertStaging(subreddit):
         else:
             sendmail.sendAlert(subject,body)
     elif failed_rows != 0 and successful_rows != 0:
-        sendmail.sendAlert("Insert Staging Subreddit: /r/" + str(subreddit) + " - PARTIAL",
-    "Job inserting staging was successful with errors at " + str(getTime.getTimestamp()) + ".\n\nSuccessfully Inserted Rows: " + str(successful_rows) + "\nFailed Inserted Rows: " + str(failed_rows))
+        subject = "Insert Staging Subreddit: /r/" + str(subreddit) + " - PARTIAL"
+        body = "Job inserting staging was successful with errors at " + str(getTime.getTimestamp()) + ".\n\nSuccessfully Inserted Rows: " + str(successful_rows) + "\nFailed Inserted Rows: " + str(failed_rows)
+        if cfg.test == True:
+            print(subject + '\n' + body)
+        else:
+            sendmail.sendAlert(subject,body)
+
     else:
-        sendmail.sendAlert("Insert Staging Subreddit: /r/" + str(subreddit) + " - FAILED",
-    "Job inserting staging has failed with all inserts at " + str(getTime.getTimestamp()) + ".\n\nSuccessfully Inserted Rows: " + str(successful_rows) + "\nFailed Inserted Rows: " + str(failed_rows) + "\n\nError message: " + str(insertError))
+        subject = "Insert Staging Subreddit: /r/" + str(subreddit) + " - FAILED"
+        body = "Job inserting staging has failed with all inserts at " + str(getTime.getTimestamp()) + ".\n\nSuccessfully Inserted Rows: " + str(successful_rows) + "\nFailed Inserted Rows: " + str(failed_rows) + "\n\nError message: " + str(insertError)
+        if cfg.test == True:
+            print(subject + '\n' + body)
+        else:
+            sendmail.sendAlert(subject,body)
 
 if __name__ == '__main__':
-    insertStaging('aww')
+    insertStaging()
