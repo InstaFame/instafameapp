@@ -15,7 +15,7 @@ def parseArguments():
     parser.add_argument("-db", help="The database being used. If no db is specified the script will use the PGDATABASE environment variable if it is set")
     parser.add_argument("-usr", help="User to log into the database under")
     parser.add_argument("-sub", help="Subreddit to execute script on", required = True)
-    parser.add_argument("-test", help="Executes this script as a test script. This means that transactions won't be committed to the database and email alerts will not be sent out.")
+    parser.add_argument("-test", help="Executes this script as a test script. This means that transactions won't be committed to the database and email alerts will not be sent out.", action='store_true')
 
     args = parser.parse_args()
     path = os.path.splitext(args.cfg )[0]
@@ -33,18 +33,28 @@ def parseArguments():
         cfg.db = args.db
     if args.usr:
         cfg.user = args.usr
+    if args.test:
+        cfg.test = args.test
 
     return cfg
 
 
 def connectToDB():
+    cfg = parseArguments()
     # Connect to database
     conn = psycopg2.connect(dbname=cfg.db, user=cfg.user, password=cfg.pw, port=cfg.port, host=cfg.host)
 
-    # Create connection cursor
-    cur = conn.cursor()
+    return conn
 
 def insertStaging(subreddit):
+
+    cfg = parseArguments()
+
+    # Setup Connection to Database
+    conn = connectToDB()
+
+    # Create connection cursor
+    cur = conn.cursor()
 
     try:
         cur.execute("SELECT version()")
@@ -72,8 +82,12 @@ def insertStaging(subreddit):
             failed_rows = failed_rows + 1
 
     if failed_rows == 0:
-        sendmail.sendAlert("Insert Staging Subreddit: /r/" + str(subreddit) + " - SUCCESS",
-    "Job inserting staging was successful at " + str(getTime.getTimestamp()) + ".\n\nSuccessfully Inserted Rows: " + str(successful_rows) + "\nFailed Inserted Rows: " + str(failed_rows))
+        subject = "Insert Staging Subreddit: /r/" + str(subreddit) + " - SUCCESS"
+        body = "Job inserting staging was successful at " + str(getTime.getTimestamp()) + ".\n\nSuccessfully Inserted Rows: " + str(successful_rows) + "\nFailed Inserted Rows: " + str(failed_rows)
+        if cfg.test == True:
+            print(subject + '\n' + body)
+        else:
+            sendmail.sendAlert(subject,body)
     elif failed_rows != 0 and successful_rows != 0:
         sendmail.sendAlert("Insert Staging Subreddit: /r/" + str(subreddit) + " - PARTIAL",
     "Job inserting staging was successful with errors at " + str(getTime.getTimestamp()) + ".\n\nSuccessfully Inserted Rows: " + str(successful_rows) + "\nFailed Inserted Rows: " + str(failed_rows))
@@ -82,6 +96,4 @@ def insertStaging(subreddit):
     "Job inserting staging has failed with all inserts at " + str(getTime.getTimestamp()) + ".\n\nSuccessfully Inserted Rows: " + str(successful_rows) + "\nFailed Inserted Rows: " + str(failed_rows) + "\n\nError message: " + str(insertError))
 
 if __name__ == '__main__':
-    init()
-    connectToDB()
     insertStaging('aww')

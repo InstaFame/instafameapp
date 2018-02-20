@@ -6,3 +6,4 @@ port = 5432
 db = 'instafame'
 user = 'instafame'
 pw = ''
+test = False
