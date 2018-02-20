@@ -4,18 +4,11 @@ import getRedditPosts
 import sendmail
 import psycopg2
 import getTime
+import os
 import argparse
 
-# ---------------------------------------------------------------------------
-# Global Variables
-# ---------------------------------------------------------------------------
-cfg = ''
-con = ''
-
-def init():
-    global cfg
-    global con
-    parser = argparse.ArgumentParser(description='InstaFame is an autoposter which grabs top posts from Reddit and reposts them on Instagram pages.', formatter_class=RawTextHelpFormatter)
+def parseArguments():
+    parser = argparse.ArgumentParser(description='InstaFame is an autoposter which grabs top posts from Reddit and reposts them on Instagram pages.', formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument("-cfg", help="Specifies configuration file. If an error saying 'no module name .py found', be sure to remove the py extension when specifying the file. This configuration file must live in the same directory as this script", required= True)
     parser.add_argument("-host", help="The host of the master node of Postgres database. If no -host if specified the script will use the PGHOST environment variable if it is set")
     parser.add_argument("-p", help="-port : The port for the master node of the Postgres database. If no -port is specified the script will use the PGPORT environment variable if it is set", type=int)
@@ -41,12 +34,11 @@ def init():
     if args.usr:
         cfg.user = args.usr
 
+    return cfg
+
 
 def connectToDB():
-    global cur
-    global conn
     # Connect to database
-    #conn = psycopg2.connect(dbname="instafame", user="instafame", password="", port=5432, host='localhost')
     conn = psycopg2.connect(dbname=cfg.db, user=cfg.user, password=cfg.pw, port=cfg.port, host=cfg.host)
 
     # Create connection cursor
@@ -90,5 +82,6 @@ def insertStaging(subreddit):
     "Job inserting staging has failed with all inserts at " + str(getTime.getTimestamp()) + ".\n\nSuccessfully Inserted Rows: " + str(successful_rows) + "\nFailed Inserted Rows: " + str(failed_rows) + "\n\nError message: " + str(insertError))
 
 if __name__ == '__main__':
+    init()
     connectToDB()
     insertStaging('aww')

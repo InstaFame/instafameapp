@@ -3,6 +3,6 @@
 # Connection Configuration
 host = 'localhost'
 port = 5432
-db = 'gpadmin'
-user = 'gpadmin'
+db = 'instafame'
+user = 'instafame'
 pw = ''
