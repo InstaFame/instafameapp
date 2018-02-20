@@ -5,6 +5,7 @@ from email.MIMEText import MIMEText
 
 def sendAlert(subject, emailBody):
 
+    # Specify addresses to be used
     fromaddr = "instafame.alerts@gmail.com"
     toaddr = "instafameapp@gmail.com"
     msg = MIMEMultipart()
