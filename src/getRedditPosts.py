@@ -64,7 +64,7 @@ def buildTopPosts(subInput):
 
     # Loop through the top 5 hottest current posts
     try:
-        for submission in subreddit.top('day'):
+        for submission in subreddit.top('week'):
 
             # Check if post has already been made, also make sure you're not looking at a stickied thread
             if submission.id not in posts_replied_to and submission.stickied == False :
