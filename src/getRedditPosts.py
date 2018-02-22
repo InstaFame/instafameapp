@@ -20,17 +20,17 @@ def initReddit():
     return reddit
 
 # This builds the posted already list. This should accept a subreddit name which with do a DB call against that table
-def buildPostsList():
-    # Build already posted list if not exists. This needs to be changed to a DB call with each subreddit being it's own table
-    if not os.path.isfile("posts_replied_to.txt"):
-        posts_replied_to = []
-    else:
-        with open("posts_replied_to.txt", "r") as f:
-           posts_replied_to = f.read()
-           posts_replied_to = posts_replied_to.split("\n")
-           posts_replied_to = list(filter(None, posts_replied_to))
-
-    return posts_replied_to
+# def buildPostsList():
+#     # Build already posted list if not exists. This needs to be changed to a DB call with each subreddit being it's own table
+#     if not os.path.isfile("posts_replied_to.txt"):
+#         posts_replied_to = []
+#     else:
+#         with open("posts_replied_to.txt", "r") as f:
+#            posts_replied_to = f.read()
+#            posts_replied_to = posts_replied_to.split("\n")
+#            posts_replied_to = list(filter(None, posts_replied_to))
+#
+#     return posts_replied_to
 
 def parseUrl(submissionLink):
     parsedUrl = urlparse(submissionLink)
@@ -54,9 +54,6 @@ def setDomain(domain):
 def buildTopPosts(subInput):
     reddit = initReddit()
 
-    # Get list of already posted posts
-    posts_replied_to = buildPostsList()
-
     # Declare the subreddit to be searched
     subreddit = reddit.subreddit(subInput)
 
@@ -71,6 +68,8 @@ def buildTopPosts(subInput):
 
                 # Creates a dictionary of each individual post
                 dictPost = {}
+
+                #print submission
 
                 #print("Title: " + submission.title)
                 dictPost['title'] = submission.title
